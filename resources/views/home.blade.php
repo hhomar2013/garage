@@ -19,9 +19,9 @@
                     مبيت السيارات
                     </a>
 
-                    <a href="{{route('send.email')}}" id="test" class="btn btn-success" >
-                        Mail To Omar
-                    </a>
+{{--                    <a href="{{route('send.email')}}" id="test" class="btn btn-success" >--}}
+{{--                        Mail To Omar--}}
+{{--                    </a>--}}
 
 
 
