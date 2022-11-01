@@ -83,11 +83,13 @@
             </div>
             <div class="col-auto">
     <span  class="form-text">
-        <button class="btn btn-primary" id="search_in_park_btn" onclick="search_in_park(document.getElementById('search_in_park').value)">  بحث</button>
+{{--        <button class="btn btn-primary" id="search_in_park_btn" onclick="search_in_park(document.getElementById('search_in_park').value)">  بحث</button>--}}
+        <button class="btn btn-primary" id="search_in_park_btn" >  بحث</button>
 {{--        <i class="fas fa-search"></i>--}}
     </span>
 
-                <a class="btn btn-warning" data-id="all" onclick="search_in_park('all')">  مشاهده الكل</a>
+{{--                <a class="btn btn-warning" id="search_in_park_all" data-id="all" onclick="search_in_park('all')">  مشاهده الكل</a>--}}
+                <button type="button" class="btn btn-warning" id="search_in_park_all">  مشاهده الكل</button>
 {{--                <i class="fas fa-arrows-to-eye"></i>--}}
             </div>
         </div>

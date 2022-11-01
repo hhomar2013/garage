@@ -218,6 +218,16 @@ $(document).ready(function () {
         }
     })
 
+    $('#search_in_park_all').click(function (e){
+      e.preventDefault();
+        search_in_park('all');
+    })
+
+    $('#search_in_park_btn').click(function (e) {
+        e.preventDefault();
+        search_in_park($('#search_in_park').val());
+    })
+
 })//end of document
 
 
