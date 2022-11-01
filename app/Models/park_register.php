@@ -10,4 +10,14 @@ class park_register extends Model
 {
     use HasFactory; use SoftDeletes;
     protected $guarded=[];
+
+    public function users()
+    {
+      return  $this->belongsTo(User::class,'user_id');
+    }
+
+    public function parking()
+    {
+        return $this->belongsTo(park::class,'parking_id');
+    }
 }

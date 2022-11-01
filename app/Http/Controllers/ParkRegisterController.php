@@ -75,6 +75,7 @@ class ParkRegisterController extends Controller
             'total' =>$request->input('total'),
             'user_id' =>Auth::id(),
             'parking_id'=>$request->input('parking_id'),
+            'period_id'=>$request->input('period_id'),
         ]);
 
       $p_id = $request->input('parking_id');
@@ -104,10 +105,97 @@ class ParkRegisterController extends Controller
 
     public function show()
     {
+        session()->forget('search_id');
         $user_id = Auth::id();
         $date = Carbon::now()->format('Y-m-d');
-        $pr = park_register::where('statue',0)->latest()->get();
+        $pr = park_register::where('statue',0)->latest()->paginate(5);
         return view('PR.show',compact('pr'));
+    }
+
+    public function Search_in_park(Request $request)
+    {
+        $id = $request->id;
+        $output = '';
+        if ($id == 'all'){
+            $pr = park_register::query()->where('statue','=',0)->orderBy('id','DESC')->get();
+        }else{
+            $pr = park_register::query()->where('register_id','=',$id)->get();
+            if($pr->count() == 0){$output .='<h2 class="text-center text-danger">لا يوجد بيانات لعرضها</h2>';}
+        }
+
+        foreach ($pr as $val){
+            if ($val->statue == 1){
+                $output .='<div class="col-md-4">
+                                    <div class="card bg-danger text-white p-3 mb-2">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex flex-row align-items-center">
+                                                <div class="icon"> <i class="fas fa-square-parking"></i> </div>
+                                                <div class="ms-2 c-details">
+                                                    <h6 class="mb-0"><small>رقم التسجيل :  '.$val->register_id.'</small></h6> <span>'. \Carbon\Carbon::parse($val->updated_at)->longRelativeToNowDiffForHumans().'</span>
+                                                </div>
+                                            </div>
+                                            <div class="badge"> <span >مبيت</span> </div>
+                                        </div>
+                                        <div class="mt-5">
+                                            <h4 class="heading"><small>الأسم :  '.$val->c_name.'</small>
+                                                <br>
+                                                <small>رقم اللوحه :  '.$val->car_num.'</small>
+                                            </h4>
+                                            <h5 class="heading">
+                                                <br>
+                                                <small>رقم البارك :  '.$val->parking->p_name.'</small>
+                                            </h5>
+                                            <div class="mt-5">
+                                                 <div class="">
+                                                    <div></div>
+                                                </div>
+                                                <div class="mt-3"> <span class="text1">تاريخ و وقت الخروج<span class="text2"><small>'.\Carbon\Carbon::parse($val->updated_at)->format('Y/m/d h:i').'</small></span></span> <small>اليوم : '.\Carbon\Carbon::parse($val->updated_at)->getTranslatedDayName().'</small></div>
+                                                <span>من خلال :  '.$val->users->name.'</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h2 class="text-center">تم تسجيل خروج السيارة</h2>
+                                    </div>
+                                </div>';
+            }else{
+                $output .='<div class="col-md-4">
+                                    <div class="card  p-3 mb-2">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex flex-row align-items-center">
+                                                <div class="icon"> <i class="fas fa-square-parking"></i> </div>
+                                                <div class="ms-2 c-details">
+                                                    <h6 class="mb-0"><small>رقم التسجيل :  '.$val->register_id.'</small></h6> <span>'. \Carbon\Carbon::parse($val->created_at)->longRelativeToNowDiffForHumans().'</span>
+                                                </div>
+                                            </div>
+                                            <div class="badge"> <span >مبيت</span> </div>
+                                        </div>
+                                        <div class="mt-5">
+                                            <h4 class="heading"><small>الأسم :  '.$val->c_name.'</small>
+                                                <br>
+                                                <small>رقم اللوحه :  '.$val->car_num.'</small>
+                                            </h4>
+                                            <h5 class="heading">
+                                                <br>
+                                                <small>رقم البارك :  '.$val->parking->p_name.'</small>
+                                            </h5>
+                                            <div class="mt-5">
+                                                 <div class="">
+                                                    <div></div>
+                                                </div>
+                                                <div class="mt-3"> <span class="text1">تاريخ و وقت الدخول<span class="text2"><small>'.\Carbon\Carbon::parse($val->created_at)->format('Y/m/d h:i').'</small></span></span> <small>اليوم : '.\Carbon\Carbon::parse($val->created_at)->getTranslatedDayName().'</small></div>
+                                                <span>من خلال :  '.$val->users->name.'</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <button class="btn btn-primary" onclick="sign_out_park('.$val->id.')">  تسجيل خروج من الجراج</button>
+                                    </div>
+                                </div>';
+            }
+
+
+        }
+
+        return response()->json($output);
     }
 
     /**

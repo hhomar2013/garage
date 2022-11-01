@@ -21,6 +21,8 @@ class CreateCustomersSubscriptionsTable extends Migration
             $table->foreign('park_id')->references('id')->on('parks')->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('period_id');
+            $table->foreign('period_id')->references('id')->on('periods')->onDelete('cascade');
             $table->decimal('price',10,2);
             $table->string('start_date');
             $table->string('end_date');

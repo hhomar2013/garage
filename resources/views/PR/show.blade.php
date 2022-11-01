@@ -4,7 +4,8 @@
 
     .card {
     border: none;
-    border-radius: 10px
+    border-radius: 10px;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     }
 
     .c-details span {
@@ -52,6 +53,10 @@
     .text2 {
     color: #a5aec0
     }
+
+    .search{
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    }
     </style>
 
 
@@ -68,41 +73,26 @@
         {{-- <h3><i class="fas fa-car-alt"></i>تقرير المبيت</h3> --}}
         <hr>
 
-        <div class="row scroll">
-                        <div class="row ">
-                                @forelse ($pr as $val)
-                                <div class="col-md-4">
-                                    <div class="card p-3 mb-2">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="d-flex flex-row align-items-center">
-                                                <div class="icon"> <i class="fas fa-square-parking"></i> </div>
-                                                <div class="ms-2 c-details">
-                                                    <h6 class="mb-0"><small>رقم التسجيل :  {{$val->register_id}}</small></h6> <span>{{\Carbon\Carbon::parse($val->created_at)->longRelativeToNowDiffForHumans()}}</span>
-                                                </div>
-                                            </div>
-                                            <div class="badge"> <span >مبيت</span> </div>
-                                        </div>
-                                        <div class="mt-5">
-                                            <h4 class="heading"><small>الأسم :  {{$val->c_name}}</small>
-                                                <br>
-                                                <small>رقم اللوحه :  {{$val->car_num}}</small>
-                                            </h4>
-                                            <div class="mt-5">
-                                                 <div class="">
-                                                    <div></div>
-                                                </div>
-                                                <div class="mt-3"> <span class="text1">تاريخ و وقت الدخول<span class="text2"><small>{{\Carbon\Carbon::parse($val->created_at)->format('Y/m/d h:i')}}</small></span></span> <small>اليوم : {{\Carbon\Carbon::parse($val->created_at)->getTranslatedDayName()}}</small></div>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <button class="btn btn-primary" onclick="sign_out_park({{$val->id}})">تسجيل خروج من الجراج</button>
-                                    </div>
-                                </div>
-                                    @empty
-                                    <h3 class="bg-danger text-white p-4 text-center rounded-pill">لا يوجد بيانات لعرضها</h3>
-                                    @endforelse
+        {{--            Search Area--}}
+        <div  class="row p-3 g-3 align-items-center bg-success text-white search">
+            <div class="col-auto">
+                <label for="inputPassword6" class="col-form-label">رقم التسجيل</label>
+            </div>
+            <div class="col-auto">
+                <input type="number" id="search_in_park" class="form-control" >
+            </div>
+            <div class="col-auto">
+    <span  class="form-text">
+        <button class="btn btn-primary" onclick="search_in_park(document.getElementById('search_in_park').value)"><i class="fas fa-search"></i> بحث</button>
+    </span>
 
-                        </div>
+                <a class="btn btn-warning" data-id="all" onclick="search_in_park('all')"><i class="fas fa-arrows-to-eye"></i> مشاهده الكل</a>
+            </div>
+        </div>
+        <hr>
+        {{--            Search End--}}
+        <div class="row scroll">
+                        <div class="row search_park" ></div>
 
         </div>
     </div>

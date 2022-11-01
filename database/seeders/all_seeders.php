@@ -15,11 +15,11 @@ class all_seeders extends Seeder
     public function run()
     {
         //make Admin Account
-        $admin = new Admin();
-        $admin->create([
-            'name'=>'Omar Mahgoub',
-            'user_name'=>'admin',
-            'password'=>bcrypt('123456')
-        ]);
+//        $admin = new Admin();
+//        $admin->create([
+//            'name'=>'Omar Mahgoub',
+//            'user_name'=>'admin',
+//            'password'=>bcrypt('123456')
+//        ]);
     }
 }

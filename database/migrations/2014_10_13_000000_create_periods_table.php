@@ -20,6 +20,7 @@ class CreatePeriodsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('isOpen')->default('0');
+            $table->string('note')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

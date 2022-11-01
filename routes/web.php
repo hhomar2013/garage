@@ -77,6 +77,8 @@ Route::group(['middleware' => ['auth']], function() {
     //Users Reports
     Route::group(['namespace'=>'UserReport','prefix'=>'UserReport'],function (){
         Route::get('show_parking',[ParkRegisterController::class,'show'])->name('users.parking_show');
+        //Search_in_park
+        Route::get('Search_in_park',[ParkRegisterController::class,'Search_in_park'])->name('users.Search_in_park');
         Route::get('parking_report_result',[ParkRegisterController::class,'parking_report_result'])->name('users.parking_report_result');
 
 
@@ -93,3 +95,4 @@ Route::group(['middleware' => ['auth']], function() {
 /*
  * Admin Routs
  */
+Route::get('show_shifts',[PeriodController::class,'show'])->name('admin.show_shifts');

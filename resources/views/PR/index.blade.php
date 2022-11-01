@@ -62,7 +62,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="">رقم الشيفت</label>
-                                        <input type="text" name="" id="" class="form-control" value="{{$period_id}}">
+                                        <input type="text" name="period_id" id="period_id" class="form-control period_id" value="{{$period_id}}" disabled>
                                     </div>
                                     <div class="col-6">
                                         <label>رقم التسجيل</label>

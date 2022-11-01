@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\customers_subscriptions;
 use App\Models\group;
+use App\Models\park_register;
 use App\Models\period;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -26,5 +28,17 @@ class Controller extends BaseController
         {
             return 0;
         }
+    }
+
+    public function period_total()
+    {
+        $period_id =  $this->Period_check();
+        $pk = park_register::query()->where('period_id',$period_id)->get();
+        $customers = customers_subscriptions::query()->where('period_id',$period_id)->get();
+        $total = value($pk->sum('total') + $customers->sum('price'));
+        return  [
+            'total_period'=>$total,
+            'total_pk'=>$pk->count(),
+        ];
     }
 }

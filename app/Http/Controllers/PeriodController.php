@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\customers_subscriptions;
+use App\Models\park_register;
 use App\Models\period;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,15 +40,24 @@ class PeriodController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\period  $period
-     * @return \Illuminate\Http\Response
-     */
-    public function show(period $period)
+    public function show()
     {
-        //
+        $period_id = $this->Period_check();
+        if ($period_id == 0){
+            return redirect()->route('period.index');
+        }else{
+            $period_details = period::query()->find($period_id);
+            $pk = park_register::where('period_id',$period_id)->get();
+            $customers = customers_subscriptions::where('period_id',$period_id)->get();
+
+            $total_pk = $pk->sum('total');
+            $total_pk_count = $pk->count();
+            $total_customers_sub_count = $customers->count();
+            $total_customers_sub = $customers->sum('price');
+            return view('cpanel.period.show',compact('pk','period_details','total_pk','total_customers_sub_count','total_pk_count','total_customers_sub'));
+        }
+
+
     }
 
     /**

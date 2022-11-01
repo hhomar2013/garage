@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\park_register;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -20,7 +22,11 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('home');
+
+        $total_period = $this->period_total()['total_period'];
+        $total_pk = $this->period_total()['total_pk'];
+        return view('home',compact('total_period','total_pk'));
+
     }
 
 

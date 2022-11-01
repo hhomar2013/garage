@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
-    <div class="container-fluid">
+    <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
+            {{ config('app.name', 'MTG') }}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
@@ -13,41 +13,51 @@
                 <a href="{{ url('/') }}" class="nav-link text-warning active">الرئيسية</a>
 
                 {{--Settings--}}
+                @can('settings')
                 <li class="nav-item dropdown">
                     <a class="nav-link " href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         الاعدادات
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        @can('groups-list')
                         <li><a class="dropdown-item" href="{{route('group.index')}}">المجموعات</a></li>
+                        @endcan
+                        @can('park-list')
                         <li><a class="dropdown-item" href="{{route('park.index')}}">البارك</a></li>
+                        @endcan
                     </ul>
                 </li>
-
+                @endcan
 
                 {{--users--}}
-                <li class="nav-item dropdown">
-                    <a class="nav-link " href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        إدارة المستخدمين
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li><a class="dropdown-item" href="{{route('users.index')}}">المستخدمين</a></li>
-                        <li><a class="dropdown-item" href="{{route('roles.index')}}">الصلاحيــات</a></li>
-                    </ul>
-                </li>
-
+                @can('users-management')
+                    <li class="nav-item dropdown">
+                        <a class="nav-link " href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            إدارة المستخدمين
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a class="dropdown-item" href="{{route('users.index')}}">المستخدمين</a></li>
+                            <li><a class="dropdown-item" href="{{route('roles.index')}}">الصلاحيــات</a></li>
+                        </ul>
+                    </li>
+                @endcan
+                @can('customers')
                     <a href="{{ route('customers.index') }}" class="nav-link  ">إدارة العملاء</a>{{--Customers--}}
+                @endcan
 
+                @can('reports')
+                    {{--reports--}}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link " href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            التقارير
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a class="dropdown-item" href="{{route('show_parking')}}">مبيت السيارات</a></li>
+                            <li><a class="dropdown-item" href="{{route('show_parking')}}">الشيفتات</a></li>
+                        </ul>
+                    </li>
 
-                {{--reports--}}
-                <li class="nav-item dropdown">
-                    <a class="nav-link " href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        التقارير
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li><a class="dropdown-item" href="{{route('show_parking')}}">مبيت السيارات</a></li>
-
-                    </ul>
-                </li>
+                @endcan
 
             </ul>
         </div>

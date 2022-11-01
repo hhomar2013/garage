@@ -43,6 +43,7 @@ $(document).ready(function () {
             'register_id': $('.register_id').val(),
             'days': $('.parking_days').val(),
             'total': $('.parking_total').val(),
+            'period_id': $('.period_id').val(),
         }
 
         $.ajax({
@@ -205,7 +206,17 @@ $(document).ready(function () {
 
     })
 
+    $('#search_in_park').keydown(function (e){
+       if(e.keyCode == 13){
+           search_in_park($(this).val());
+       }
+    })
 
+    $('#search_in_park').change(function () {
+        if($(this).val() == ''){
+            $('.search_park').html('');
+        }
+    })
 
 })//end of document
 
@@ -228,17 +239,47 @@ function sign_out_park($id) {
                 type: 'GET',
                 data:{id:p_id},
                  dataType: "json",
-                success:function (response) {
-                    swal.fire({
-                        icon: 'success',
-                        title:'جراج المنتزة' ,
-                        text: response,
-                        showConfirmButton: false,
-                        footer: '<span class="text-danger">MTG © 2016-2022</span>'
-                    })
+                success:function (response)
+                {
+
+                    // swal.fire({
+                    //     icon: 'success',
+                    //     title:'جراج المنتزة' ,
+                    //     text: response,
+                    //     showConfirmButton: false,
+                    //     footer: '<span class="text-danger">MTG © 2016-2022</span>'
+                    // })
+                    window.location.href = '/UserReport/show_parking';
                 }
             })
 
         }
     })
 }//end of sign out park
+
+
+function search_in_park(id) {
+    if (id == ""){
+        swal.fire({
+            icon: 'error',
+            title:'جراج المنتزة' ,
+            text: "برجاء كتابة رقم التسجيل  !!!",
+            showConfirmButton: false,
+            footer: '<span>MTG © 2016-2022</span>'
+        })
+    }else {
+        $.ajax({
+            url:'/UserReport/Search_in_park',
+            type: 'GET',
+            data:{id:id},
+            dataType: "json",
+            success:function (pr) {
+            $('.search_park').html('');
+            $('.search_park').html(pr);
+            }
+        })
+
+    }
+
+}//End of search park
+
