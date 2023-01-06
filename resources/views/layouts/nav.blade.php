@@ -53,7 +53,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                             <li><a class="dropdown-item" href="{{route('show_parking')}}">مبيت السيارات</a></li>
-                            <li><a class="dropdown-item" href="{{route('show_parking')}}">الشيفتات</a></li>
+                            <li><a class="dropdown-item" href="{{route('admin.show_all_shifts')}}">الشيفتات</a></li>
                         </ul>
                     </li>
 

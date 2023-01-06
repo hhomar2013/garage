@@ -161,12 +161,59 @@ $(document).ready(function () {
             dataType: "json",
             success:function (response) {
                 message_success(response)
-               window.location.href ='/'
+                setTimeout(function () {
+                    window.location.href ='/'
+                },2000)
+
             }
         })
 
 
     })
+
+    //period Close
+    $('.period_closed').click(function (e) {
+        e.preventDefault();
+        let data = {
+            'per_id':$('.per_close_id').val(),
+            'per_end':$('.per_close_end').val(),
+            'note':$('.per_close_note').val(),
+        }
+
+        $.ajax({
+            //route in show period
+            url:config.routes.zone,
+            type: 'POST',
+            data:data,
+            dataType: "json",
+            success:function (response) {
+                message_success(response)
+                setTimeout(function () {
+                    window.location.href ='/'
+                },3000)
+            }
+        })
+
+
+    })
+
+    //get data to period report
+    $('.status_periods').change(function () {
+        let id = $(this).val();
+        $.ajax({
+            url:'/show_all_shifts_get',
+            type: 'GET',
+            data:{id:id},
+            dataType: "json",
+            success:function (response) {
+                $('.show_shift').html('');
+                $('.show_shift').html(response);
+            }
+        })
+    })
+
+
+
 
     $('.get_parking_car').click(function (e) {
         e.preventDefault();

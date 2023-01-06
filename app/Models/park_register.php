@@ -16,8 +16,8 @@ class park_register extends Model
       return  $this->belongsTo(User::class,'user_id');
     }
 
-    public function parking()
-    {
-        return $this->belongsTo(park::class,'parking_id');
-    }
+//    public function parking()
+//    {
+//        return $this->belongsTo(park::class,'parking_id');
+//    }
 }

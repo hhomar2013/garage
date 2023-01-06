@@ -31,6 +31,7 @@ Auth::routes(['register'=>false ,'verify'=>true]);
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'api']);
     Route::get('logout',[\App\Http\Controllers\HomeController::class,'logout_users'])->name('users.logout');
 
 
@@ -47,7 +48,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('period', PeriodController::class);
     //save period
     Route::post('period_save',[PeriodController::class,'store']);
-
+    //Period Close
+    Route::post('period_close',[PeriodController::class,'period_close'])->name('period_close');
 
 
     //group
@@ -96,3 +98,5 @@ Route::group(['middleware' => ['auth']], function() {
  * Admin Routs
  */
 Route::get('show_shifts',[PeriodController::class,'show'])->name('admin.show_shifts');
+Route::get('show_all_shifts',[PeriodController::class,'show_all_shifts'])->name('admin.show_all_shifts');
+Route::get('show_all_shifts_get',[PeriodController::class,'show_all_shifts_get'])->name('admin.show_all_shifts_get');

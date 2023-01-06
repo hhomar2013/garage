@@ -25,8 +25,7 @@ class CreateParkRegistersTable extends Migration
             $table->string('statue')->default(0);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('parking_id');
-            $table->foreign('parking_id')->references('id')->on('parks')->onDelete('cascade');
+            $table->string('parking_id');
             $table->unsignedBigInteger('period_id');
             $table->foreign('period_id')->references('id')->on('periods')->onDelete('cascade');
             $table->softDeletes();

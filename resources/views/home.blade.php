@@ -64,6 +64,8 @@
             {{--                        Mail To Omar--}}
             {{--                    </a>--}}
 
+            <a href="login/api" class="btn btn-primary">api</a>
+
 
     </div>
 </div>

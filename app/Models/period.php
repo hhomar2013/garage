@@ -10,4 +10,9 @@ class period extends Model
 {
     use HasFactory; use SoftDeletes;
     protected $guarded=[];
+
+    public function GetUser()
+    {
+       return $this->belongsTo(User::class,'user_id');
+    }
 }
